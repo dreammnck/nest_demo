@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  mysql:
+  db:
     image: mysql:8.0
     ports: 
       - '3307:3306'
@@ -8,6 +8,33 @@ services:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=demo_nest
     volumes:
-      - demo_nest:/var/lib/mysql
+      - demo_nest_db:/var/lib/mysql
+    networks:
+      - nest_demo
+    container_name: 'db_container'
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile 
+    environment:
+      - NODE_ENV=development
+    ports:
+      - '5000:5000'
+    networks:
+      - nest_demo
+    volumes:
+      - ./:/app
+      - exclude:/app/node_modules
+    container_name: 'backend_container'
+    depends_on:
+      - db
+  
 volumes:
-  demo_nest:
+  demo_nest_db:
+  exclude:
+networks:
+  nest_demo:
+    driver: bridge
+    name: nest_demo
+
+
