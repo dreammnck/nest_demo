@@ -31,8 +31,6 @@ export class UserController {
   @Get()
   async getUser(@Req() req: ExtendRequest, @Res() res: Response) {
     const { username, id } = req.user;
-    console.log(username, id);
-
     const user = await this.userService.findById(id);
     return res.send(user).status(HttpStatus.OK);
   }
