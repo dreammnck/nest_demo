@@ -1,0 +1,9 @@
+-- AlterTable
+ALTER TABLE `Post` ADD COLUMN `create_time` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    ADD COLUMN `delete_time` DATETIME(3) NULL,
+    ADD COLUMN `update_time` DATETIME(3) NULL;
+
+-- AlterTable
+ALTER TABLE `User` ADD COLUMN `create_time` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    ADD COLUMN `delete_time` DATETIME(3) NULL,
+    ADD COLUMN `update_time` DATETIME(3) NULL;
