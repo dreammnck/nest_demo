@@ -5,8 +5,8 @@ dotenv.config({ path: '.env.'.concat(envType)});
 
 
 export default () => ({
-  port: parseInt(process.env.PORT, 10) || 5000,
-  database_url: process.env.DATABASE_URL, // เดา55555555
+  port: parseInt(process.env.PORT, 10) || 8080,
+  database_url: process.env.DATABASE_URL, 
   salt: parseInt(process.env.SALT) ,
   secret: String(process.env.SECRET),
 });
