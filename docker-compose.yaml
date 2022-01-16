@@ -13,18 +13,15 @@ services:
       - nest_demo
     container_name: 'db_container'
   app:
-    build:
-      context: ./
-      dockerfile: Dockerfile 
+    image: nest_demo
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
+    env_file:
+      - ./.env.production
     ports:
-      - '5000:5000'
+      - '8080:8080'
     networks:
       - nest_demo
-    volumes:
-      - ./:/app
-      - exclude:/app/node_modules
     container_name: 'backend_container'
     depends_on:
       - db
@@ -36,5 +33,3 @@ networks:
   nest_demo:
     driver: bridge
     name: nest_demo
-
-
