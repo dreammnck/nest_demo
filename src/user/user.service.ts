@@ -26,7 +26,9 @@ export class UserService {
         createdDate: user.create_time,
       });
     } catch (err) {
-      throw err;
+      throw new BadRequestException({
+        message: 'This username has already in use',
+      });
     }
   }
 
@@ -47,6 +49,11 @@ export class UserService {
         username: username,
       },
     });
+
+    if (!user) {
+      throw new BadRequestException({ message: `Could not find user` });
+    }
+    
     return new User({
       id: user.id,
       username: user.username,
