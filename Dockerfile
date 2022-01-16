@@ -1,11 +1,17 @@
-FROM node:17-alpine
+FROM node:17-alpine AS builder
 WORKDIR /app/
-COPY package*.json ./
-COPY prisma ./prisma
-RUN yarn install
+COPY package*.json .
+COPY /prisma ./prisma
+RUN yarn --frozen-lockfile
 COPY . .
-ENV NODE_ENV=development
+RUN yarn build
 
+FROM node:17-alpine 
+WORKDIR /app/
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/dist ./dist
+ENV NODE_ENV=production
+EXPOSE 8080
 
-EXPOSE 5000
-CMD ["yarn","start:dev"]
+CMD ["yarn", "start:prod"]
