@@ -17,3 +17,9 @@ jobs:
           cache: 'yarn'
       - run: yarn install
       - run: yarn build
+  Build-Image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the docker image
+        run: docker build . --file Dockerfile
